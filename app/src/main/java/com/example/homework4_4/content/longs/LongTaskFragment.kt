@@ -46,6 +46,6 @@ class LongTaskFragment : Fragment() {
     }
 
     private fun onClick(item: Tasks){
-        findNavController().navigate(R.id.taskEditFragment)
+        TaskManager.dao.remove(item)
     }
 }
