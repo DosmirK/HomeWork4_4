@@ -10,10 +10,17 @@
         android:name="com.example.homework4_4.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
+
         <action
-            android:id="@+id/action_navigation_home_to_taskEditFragment"
-            app:destination="@id/taskEditFragment" />
+            android:id="@+id/action_navigation_home_to_editProjectFragment"
+            app:destination="@id/editProjectFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/taskEditFragment"
+        android:name="com.example.homework4_4.content.projects.TaskEditFragment"
+        android:label="fragment_task_edit"
+        tools:layout="@layout/fragment_task_edit" />
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -37,7 +44,7 @@
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.homework4_4.ui.splash.SplashFragment"
+        android:name="com.example.homework4_4.splash_onboarding.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -49,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.example.homework4_4.ui.onboarding.OnboardingFragment"
+        android:name="com.example.homework4_4.splash_onboarding.splash.onboarding.OnboardingFragment"
         android:label="fragment_onboarding"
         tools:layout="@layout/fragment_onboarding" >
         <action
@@ -57,9 +64,10 @@
             app:destination="@id/navigation_home" />
     </fragment>
     <fragment
-        android:id="@+id/taskEditFragment"
-        android:name="com.example.homework4_4.content.tasks.TaskEditFragment"
-        android:label="fragment_task_edit"
-        tools:layout="@layout/fragment_task_edit" />
+        android:id="@+id/editProjectFragment"
+        android:name="com.example.homework4_4.content.projects.EditProjectFragment"
+        android:label="fragment_edit_project"
+        tools:layout="@layout/fragment_edit_project" />
+
 
 </navigation>

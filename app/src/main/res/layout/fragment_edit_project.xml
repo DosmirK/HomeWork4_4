@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".content.projects.EditProjectFragment">
+
+    <TextView
+        android:text="@string/mark_as"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <RadioGroup
+        android:id="@+id/rb_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rb_in_urgent_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_project"/>
+        <RadioButton
+            android:id="@+id/rb_long_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/work_project"/>
+        <RadioButton
+            android:id="@+id/rb_completed_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/studies_project"/>
+    </RadioGroup>
+
+    <EditText
+        android:inputType="textMultiLine"
+        android:id="@+id/edit_text"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        android:hint="@string/type_project_name"
+        android:importantForAutofill="no" />
+
+    <Button
+        android:layout_marginTop="32dp"
+        android:layout_gravity="center"
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add"/>
+
+</LinearLayout>

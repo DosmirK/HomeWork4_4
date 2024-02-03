@@ -8,32 +8,33 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.homework4_4.R
-import com.example.homework4_4.content.completed.CompletedTaskFragment
-import com.example.homework4_4.content.longs.LongTaskFragment
-import com.example.homework4_4.content.tasks.TaskFragment
-import com.example.homework4_4.content.urgent.UrgentTaskFragment
-import com.example.homework4_4.data.TaskDao
-import com.example.homework4_4.data.TaskManager
+import com.example.homework4_4.content.studies.StudiesProjectFragment
+import com.example.homework4_4.content.work.WorkProjectsFragment
+import com.example.homework4_4.content.projects.ProjectFragment
+import com.example.homework4_4.content.my_project.MyProjectFragment
+import com.example.homework4_4.data.dao.ProjectDao
+import com.example.homework4_4.data.db.DatabaseManager
+import com.example.homework4_4.data.model.Project
+import com.example.homework4_4.data.model.ProjectAndTasks
+import com.example.homework4_4.data.model.TypeOfProject
 import com.example.homework4_4.databinding.FragmentHomeBinding
-import com.example.homework4_4.model.Tasks
-import com.example.homework4_4.model.TypeOfTask
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var taskDao: TaskDao
-    private lateinit var allTasks: List<Tasks>
-    private lateinit var urgentTasks: List<Tasks>
-    private lateinit var longTasks: List<Tasks>
-    private lateinit var completedTasks: List<Tasks>
+    private lateinit var projectDao: ProjectDao
+    private lateinit var allProjects: List<Project>
+    private lateinit var myProjects: List<Project>
+    private lateinit var workProjects: List<Project>
+    private lateinit var studiesProject: List<Project>
 
     private val fragments = listOf(
-        TaskFragment(),
-        UrgentTaskFragment(),
-        LongTaskFragment(),
-        CompletedTaskFragment()
+        ProjectFragment(),
+        MyProjectFragment(),
+        WorkProjectsFragment(),
+        StudiesProjectFragment()
     )
 
     override fun onCreateView(
@@ -53,7 +54,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        taskDao = TaskManager.dao
+        projectDao = DatabaseManager.projectDao
         loadData()
         initView()
         initListener()
@@ -61,7 +62,8 @@ class HomeFragment : Fragment() {
 
     private fun initListener() {
         binding.btnAddTask.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToTaskEditFragment())
+
+            findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToEditProjectFragment())
         }
     }
 
@@ -72,28 +74,28 @@ class HomeFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.homeViewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> resources.getString(R.string.title_all_tasks)
-                1 -> resources.getString(R.string.title_urgent_tasks)
-                2 -> resources.getString(R.string.title_long_tasks)
-                else -> resources.getString(R.string.title_completed_tasks)
+                1 -> resources.getString(R.string.my_project)
+                2 -> resources.getString(R.string.work_project)
+                else -> resources.getString(R.string.studies_project)
             }
         }.attach()
     }
 
     private fun loadData() {
-        taskDao.getAll().observe(viewLifecycleOwner, Observer { tasks ->
-        allTasks = tasks
-        urgentTasks = allTasks.filter { it.type == TypeOfTask.URGENT_TASKS }
-        longTasks = allTasks.filter { it.type == TypeOfTask.LONG_TASKS }
-        completedTasks = allTasks.filter { it.type == TypeOfTask.COMPLETED }
+        projectDao.getProjects().observe(viewLifecycleOwner, Observer { projects ->
+        allProjects = projects
+        myProjects = allProjects.filter { it.type == TypeOfProject.MY_PROJECT }
+        workProjects = allProjects.filter { it.type == TypeOfProject.WORK }
+        studiesProject = allProjects.filter { it.type == TypeOfProject.STUDIES }
 
-        urgentTasks = urgentTasks.sortedBy { it.type }
-        longTasks = longTasks.sortedBy { it.type }
-        completedTasks = completedTasks.sortedBy { it.type }
+        myProjects = myProjects.sortedBy { it.type }
+        workProjects = workProjects.sortedBy { it.type }
+        studiesProject = studiesProject.sortedBy { it.type }
 
-        (fragments[0] as TaskFragment).taskAdapter.submitList(allTasks)
-        (fragments[1] as UrgentTaskFragment).taskAdapter.submitList(urgentTasks)
-        (fragments[2] as LongTaskFragment).taskAdapter.submitList(longTasks)
-        (fragments[3] as CompletedTaskFragment).taskAdapter.submitList(completedTasks)
+        (fragments[0] as ProjectFragment).projectAdapter.submitList(allProjects)
+        (fragments[1] as MyProjectFragment).projectAdapter.submitList(myProjects)
+        (fragments[2] as WorkProjectsFragment).projectAdapter.submitList(workProjects)
+        (fragments[3] as StudiesProjectFragment).projectAdapter.submitList(studiesProject)
     })
     }
 }

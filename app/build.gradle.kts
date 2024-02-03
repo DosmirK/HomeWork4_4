@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+
 }
 
 android {
@@ -71,4 +72,5 @@ dependencies {
 
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 }
